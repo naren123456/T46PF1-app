@@ -1,0 +1,7 @@
+- alias: hasura
+  config:
+    configmap: controller-conf
+    namespace: arrowroot86-hasura
+  data: null
+  kubeContext: arrowroot86
+  name: arrowroot86
