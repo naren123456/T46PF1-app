@@ -6,7 +6,7 @@ import Dialog from 'material-ui/Dialog';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 import LinearProgress from 'material-ui/LinearProgress';
-import { saveOffline } from './config';
+import { saveOffline,getSavedToken } from './config';
 import { authenticateUser } from './api';
 
 
@@ -38,6 +38,8 @@ class Auth extends React.Component {
   login = () => {
     console.log('on login clicked');
     this.showProgressIndicator(true)
+    console.log(this.state.username);
+    console.log(this.state.password);
     authenticateUser(this.state.username, this.state.password, false).then(authResponse => {
       this.showProgressIndicator(false)
       console.log(authResponse);
@@ -46,7 +48,7 @@ class Auth extends React.Component {
         saveOffline(authResponse.auth_token)
         this.showAlert("Login Successful! \n Your auth credentials are: " + JSON.stringify(authResponse, null, 2));
       } else {
-        this.showAlert(JSON.stringify(authResponse.message));
+        this.showAlert(JSON.stringify(authResponse));
       }
     });
   }
@@ -57,14 +59,11 @@ class Auth extends React.Component {
     authenticateUser(this.state.username, this.state.password, true).then(authResponse => {
       this.showProgressIndicator(false)
       console.log(authResponse);
-      if (authResponse.auth_token) 
-	  {
+      if (authResponse.auth_token) {
         saveOffline(authResponse.auth_token)
         this.showAlert("SignUp Successful! \n Your auth credentials are: " + JSON.stringify(authResponse, null, 2))
-      } 
-	  else
-	  {
-        this.showAlert(JSON.stringify(authResponse.message));
+      } else {
+        this.showAlert(JSON.stringify(authResponse));
       }
     });
   }

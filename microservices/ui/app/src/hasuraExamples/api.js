@@ -80,19 +80,19 @@ const authenticateUser = (username, password, shouldSignUp) => {
   var requestOptions = {
       method: "POST",
       headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
+          "Content-Type": "application/json"
       },
-
+      body: JSON.stringify({
+        provider: "username",
         data: {
           "username": username,
           "password": password
         }
-      };
-  
+      })
+  };
 
-  return fetch("https:/app.arrowroot86.hasura-app.io" + path, requestOptions)
+  return fetch(projectConfig.url.auth + path, requestOptions)
   .then(function(response) {
-	console.log('response: ' + response);
     return response.json();
   })
   .catch(function(error) {

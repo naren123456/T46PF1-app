@@ -21,8 +21,10 @@ def validnumber(mobile):
 @app.route('/login',methods=['POST'])
 def login():
     if request.method=='POST':
-        username=request.data['username']
-        password=request.data['password']
+        r=json.loads(request.data)      
+        username=r['username']
+        password=r['password']
+
         if '@' in username:
             data={"provider": "mobile-password", "data": {"email": username,"password": password }}
             data=json.dumps(data)
@@ -38,19 +40,23 @@ def login():
         else:
             data={"message": "Not a valid entry for username" }
             data=json.dumps(data)
-            return data	
+            return data
+        print(st)
         return st
+
     
-@app.route('/signup',methods=['POST','GET'])
+@app.route('/signup',methods=['POST'])
 def signup():
     if request.method=='POST':
-        username=request.form['username']
-        password=request.form['password']
+        r=json.loads(request.data)      
+        username=r['username']
+        password=r['password']
+
         if '@' in username:
             if validemail(username):
                 data={"provider" : "email",  "data" : {"email": username,"password": password}}
                 data=json.dumps(data)
-                r = requests.post('auth.arrowroot86.hasura-app.io/v1/signup', headers=headers, data=data)
+                r = requests.post('https://auth.arrowroot86.hasura-app.io/v1/signup', headers=headers, data=data)
                 st=r.content
                 print(st)
             else:
@@ -77,10 +83,5 @@ def signup():
             data=json.dumps(data)
             print(data)
             return data
-        
-        return st    
-    else:
-        data={"message": "get method" }
-        data=json.dumps(data)
-        print(data)
-        return data
+        print(json.loads(st))
+        return json.loads(st)    
