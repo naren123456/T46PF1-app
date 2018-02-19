@@ -1,9 +1,18 @@
-# hello-python-flask
+# App Clone - Facebook
 
 Boilerplate Hasura project with [Flask](http://flask.pocoo.org/) microservice.
 
+## Frontend Features Implemented
+1.UI has been implemted for login and signup page using React JS( UI Microservice - https://ui.arrowroot86.hasura-app.io/). 
+2.The login page expects user to enter a username(mail/mobile) and password of atleast 8 characters length. If the user has not been registered, then he can signup in the signup page.
 
-## Getting started
+3. The UI sends the login or signup request to backend in json format and gets response back from the backend, then alerts the user whether login is successful or not.
+
+## Backend Features Implemented
+1. Backend has been implemented using Python Flask(App microservice - https://app.arrowroot86.hasura-app.io/)
+2. The UI requests for login and signup are handled by the backend.
+3. For login or signup requests, the Backend checks whether the given username is email or mobile. If the given email or mobile number is invalid, then an invalid response is sent back. If valid email or mobile was given, then based on the type of username(email or  mobile) the post requests are made to the Auth Api of Hasura. The response from the Auth Api is forwarded to the Frontend UI.
+
 
 ### Prerequisites
 
